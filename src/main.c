@@ -1,5 +1,12 @@
 /* ------------------------------------------
-  Lab4
+  	Ka Yi Cheng
+	ECS642 Lab 6
+	KL28Z Version
+
+ Start with LEDs displaying Pattern A (red full on)
+ Smoothly transition colors by adjusting brightness levels based on the sequence
+ Timing control via B1 button
+ Switch patterns via B2 button
   -------------------------------------------- */
 
 #include <MKL28Z7.h>
@@ -234,7 +241,7 @@ void LEDsInPattern(){
                   else patternBState = StateY;
                   break;
             
-            case StateY: // red in full, green increase ,blue decrease
+              case StateY: // red in full, green increase ,blue decrease
                   if (greenBrightness < MAXBRIGHTNESS) {
                       greenBrightness++;
                   }
@@ -244,7 +251,7 @@ void LEDsInPattern(){
                   else patternBState = StateZ; 
                   break;
             
-            case StateZ: // green in full, blue increase, red decrease
+              case StateZ: // green in full, blue increase, red decrease
                   if (redBrightness > 0 && blueBrightness < MAXBRIGHTNESS) {
                       redBrightness--; 
                       blueBrightness++;
@@ -252,7 +259,7 @@ void LEDsInPattern(){
                   else patternBState = StateW; 
                   break;
            }
-        }
+	}
         //update colour
         setLEDBrightness(Red, redBrightness);  
         setLEDBrightness(Green, greenBrightness);  
@@ -277,14 +284,10 @@ void LPIT0_IRQHandler() {
         togglePatternTask();
         LEDsInPattern();
     }
-		
-	// check source of interrupt - LPIT0 channel 1
-	//if (LPIT0->MSR & LPIT_MSR_TIF1_MASK) {
-			//add code
-  //}
 
-  // Clear all
-  LPIT0->MSR = LPIT_MSR_TIF0(1) | LPIT_MSR_TIF1(1) | LPIT_MSR_TIF2(1)
+
+   // Clear all
+   LPIT0->MSR = LPIT_MSR_TIF0(1) | LPIT_MSR_TIF1(1) | LPIT_MSR_TIF2(1)
              | LPIT_MSR_TIF3(1) ; // write to clear
 }
 
@@ -326,22 +329,16 @@ void toggleRateTask() {
             }
             break ;
 						
-				case MEDIUM:
-					if (pressedB1_ev){
-								pressedB1_ev =false;
-								setTimer(0, pitFastCount);
-								rateState = FAST;
-					}
-					break ;
+	case MEDIUM:
+	    if (pressedB1_ev){
+		pressedB1_ev =false;
+		setTimer(0, pitFastCount);
+		rateState = FAST;
+	    }
+	    break ;
     }
     startTimer(0);
 }
-/*----------------------------------------------------------------------------
-  Rate    |   Total Time   |   Step Time   |   Load Value
- Slow            9s             0.09375         749,999
- Medium          5s             0.05208         416,665
- Fast            2s             0.02083         166,665
- *----------------------------------------------------------------------------*/
 
 
 /*----------------------------------------------------------------------------
