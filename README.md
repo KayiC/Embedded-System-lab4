@@ -1,4 +1,3 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/yxcUaP9t)
 # Lab4
 This lab project is working on the transition of the LED colours between two patterns (Pattern A and Pattern B), and the transitions occur smoothly, with brightness levels increasing and decreasing depended on the timing.
 
